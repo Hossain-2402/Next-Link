@@ -1,0 +1,5 @@
+1) Authentication [Hossain]
+2) Home page 
+       - Post input field 
+       - News Feed
+       
