@@ -1,6 +1,6 @@
 1) Authentication [Hossain]
 2) Home page 
-       - Post input field 
-       - News Feed
+       - Post input field [Tosin] 
+       - News Feed [Rafi]
        
 Rafi can 
