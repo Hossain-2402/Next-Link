@@ -37,7 +37,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> _signUp() async {
     if (_email.text.isEmpty ||
         _password.text.isEmpty ||
-        _netImage == avaterImage || _userName.text.isEmpty) {
+        _netImage == avaterImage ||
+        _userName.text.isEmpty) {
       return;
     }
 
@@ -115,7 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(255, 168, 247, 238),
+              Color.fromARGB(255, 168, 210, 255),
               // Color.fromARGB(255, 210, 245, 235),
               Color.fromARGB(255, 255, 255, 255),
               Color.fromARGB(255, 255, 255, 255),
@@ -343,7 +344,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   style: ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll<Color>(
-                      Color.fromARGB(255, 63, 229, 109),
+                      Color.fromARGB(255, 168, 210, 255),
                     ),
                   ),
                   child: Padding(
