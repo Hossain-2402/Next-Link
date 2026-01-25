@@ -52,6 +52,11 @@ class _LogInScreenState extends State<LogInScreen> {
             curve: Curves.easeOutBack,
           ),
         );
+
+
+
+
+
       }
     } catch (e) {
       _showMessage('Sign in failed: ${e.toString()}');
@@ -75,7 +80,7 @@ class _LogInScreenState extends State<LogInScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(255, 168, 247, 238),
+              Color.fromARGB(255, 168, 210, 255),
               // Color.fromARGB(255, 210, 245, 235),
               Color.fromARGB(255, 255, 255, 255),
               Color.fromARGB(255, 255, 255, 255),
@@ -230,7 +235,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         },
                         style: ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll<Color>(
-                            Color.fromARGB(255, 63, 229, 109),
+                            Color.fromARGB(255, 168, 210, 255),
                           ),
                         ),
                         child: Padding(
