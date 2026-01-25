@@ -409,3 +409,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+//
+// body: Container(
+//         width: double.infinity,
+//         height: double.infinity,
+//         decoration: const BoxDecoration(
+//           gradient: LinearGradient(
+//             begin: Alignment.topCenter,
+//             end: Alignment.bottomCenter,
+//             colors: [
+//               Color.fromARGB(255, 168, 210, 255),
+//               // Color.fromARGB(255, 210, 245, 235),
+//               Color.fromARGB(255, 255, 255, 255),
+//               Color.fromARGB(255, 255, 255, 255),
+//             ],
+//           ),
+//         ),
+//         child: SingleChildScrollView(
+//           child: Column(
+//             children: [
+//
+// 		]
+// 	   )
+// 	)
+//     )
+// )
