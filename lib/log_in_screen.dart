@@ -52,6 +52,11 @@ class _LogInScreenState extends State<LogInScreen> {
             curve: Curves.easeOutBack,
           ),
         );
+
+
+
+
+
       }
     } catch (e) {
       _showMessage('Sign in failed: ${e.toString()}');
