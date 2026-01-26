@@ -239,7 +239,7 @@ class _FeedPageState extends State<FeedScreen> {
               ), // ClipRRect
             ), // Center
           ), // Positioned
-        ],//test
+        ],
       ),
     );
   }
