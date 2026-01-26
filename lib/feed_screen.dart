@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FeedScreen extends StatefulWidget {
-  const FeedScreen({Key? key}) : super(key: key);
+  const FeedScreen({super.key});
 
   @override
   _FeedPageState createState() => _FeedPageState();
@@ -25,6 +25,7 @@ class _FeedPageState extends State<FeedScreen> {
           ],
         ),
       ),
+
       child: Text(
         "Welcome",
         style: TextStyle(color: Colors.black, decorationColor: Colors.white),
