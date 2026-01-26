@@ -157,26 +157,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SizedBox(height: 40),
 
-              CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.grey,
-                backgroundImage: NetworkImage(
-                  "https://imgs.search.brave.com/uDEcwBKmk2pulTQswWm7XSMR4qrHMDyagzZBYVIMHLs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvNTAwcC8y/OC82Ni9ncmF5LXBy/b2ZpbGUtc2lsaG91/ZXR0ZS1hdmF0YXIt/dmVjdG9yLTIxNTQy/ODY2LmpwZw",
-                ),
-                foregroundImage: _pickedImage != null
-                    ? NetworkImage(_netImage!)
-                    : NetworkImage(
-                        "https://imgs.search.brave.com/uDEcwBKmk2pulTQswWm7XSMR4qrHMDyagzZBYVIMHLs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvNTAwcC8y/OC82Ni9ncmF5LXBy/b2ZpbGUtc2lsaG91/ZXR0ZS1hdmF0YXIt/dmVjdG9yLTIxNTQy/ODY2LmpwZw",
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.grey,
+                    backgroundImage: NetworkImage(
+                      "https://imgs.search.brave.com/uDEcwBKmk2pulTQswWm7XSMR4qrHMDyagzZBYVIMHLs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvNTAwcC8y/OC82Ni9ncmF5LXBy/b2ZpbGUtc2lsaG91/ZXR0ZS1hdmF0YXIt/dmVjdG9yLTIxNTQy/ODY2LmpwZw",
+                    ),
+                    foregroundImage: _pickedImage != null
+                        ? NetworkImage(_netImage!)
+                        : NetworkImage(
+                            "https://imgs.search.brave.com/uDEcwBKmk2pulTQswWm7XSMR4qrHMDyagzZBYVIMHLs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvNTAwcC8y/OC82Ni9ncmF5LXBy/b2ZpbGUtc2lsaG91/ZXR0ZS1hdmF0YXIt/dmVjdG9yLTIxNTQy/ODY2LmpwZw",
+                          ),
+                  ),
+                  //const SizedBox(height: 5),
+                  Positioned(
+                    bottom: -5,
+                    right: 5,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        shape: BoxShape.circle,
                       ),
+                      child: IconButton(
+                        color: Colors.white,
+                        onPressed: _pickImage,
+                        icon: const Icon(Icons.add),
+                        iconSize: 30,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 5),
-              IconButton(
-                onPressed: _pickImage,
-                icon: const Icon(Icons.add),
-                iconSize: 30,
-              ),
-
-              SizedBox(height: 10),
+              SizedBox(height: 20),
 
               Container(
                 height: 70,
@@ -409,16 +424,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 //
 // body: Container(
