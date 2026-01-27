@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
 class FeedScreen extends StatefulWidget {
-  const FeedScreen({Key? key}) : super(key: key);
+  const FeedScreen({super.key});
 
   @override
   _FeedPageState createState() => _FeedPageState();
@@ -172,7 +172,6 @@ class _FeedPageState extends State<FeedScreen> {
         ),
       ),
 
-      // MIDDLE PAGE (FEED)
       _feedPage(),
 
       // RIGHT PAGE
@@ -240,7 +239,7 @@ class _FeedPageState extends State<FeedScreen> {
             ), // Center
           ), // Positioned
         ],
-      ),
+
     );
   }
 }
