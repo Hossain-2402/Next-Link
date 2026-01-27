@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
+import 'post.dart';
 
 class FeedScreen extends StatefulWidget {
-  const FeedScreen({super.key});
+  final String? userName;
+  final String? profilePic;
+
+  const FeedScreen({
+    required this.userName,
+    required this.profilePic,
+    super.key,
+  });
 
   @override
   _FeedPageState createState() => _FeedPageState();
@@ -10,6 +18,21 @@ class FeedScreen extends StatefulWidget {
 
 class _FeedPageState extends State<FeedScreen> {
   int currentIndex = 1;
+
+  String? theUserName;
+  String? thePP;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   setState(() {
+  //     theUserName = widget.userName ?? "";
+  //     thePP = widget.profilePic ?? "";
+  //   });
+  //   print("From FeedScreen:");
+  //   print(widget.userName);
+  //   print(widget.profilePic);
+  // }
 
   Widget _postWidget({
     required String profileImage,
@@ -21,7 +44,7 @@ class _FeedPageState extends State<FeedScreen> {
       margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
 
       decoration: BoxDecoration(
-        color: Colors.white54,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -79,7 +102,6 @@ class _FeedPageState extends State<FeedScreen> {
               Color.fromARGB(255, 168, 210, 255),
               // Color.fromARGB(255, 210, 245, 235),
               Color.fromARGB(255, 255, 255, 255),
-              Color.fromARGB(255, 255, 255, 255),
             ],
           ),
         ),
@@ -88,8 +110,8 @@ class _FeedPageState extends State<FeedScreen> {
             children: [
               SizedBox(height: 250),
               _postWidget(
-                profileImage: "https://randomuser.me/api/portraits/men/1.jpg",
-                userName: "Rahim",
+                profileImage: widget.profilePic ?? "",
+                userName: widget.userName ?? "",
                 caption:
                     "Discover adventure in Patagonia's peaks or serenity in Provence",
                 postImage:
@@ -153,15 +175,7 @@ class _FeedPageState extends State<FeedScreen> {
   Widget build(BuildContext context) {
     List<Widget> pages = [
       // LEFT PAGE
-      Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: Image.network(
-          "https://imgs.search.brave.com/4ADzYGgkY07mfEkKxUoxkPVkkAVujfy84nesQaZIOrk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/d2FsbHBhcGVyc2Fm/YXJpLmNvbS83OS8y/Ny9VTTV0NlMucG5n",
-          fit: BoxFit.cover,
-        ),
-      ),
-
+      PostScreen(),
       _feedPage(),
 
       // RIGHT PAGE
@@ -197,7 +211,17 @@ class _FeedPageState extends State<FeedScreen> {
                     child: Container(
                       height: 80,
                       width: 400,
-                      color: Color.fromARGB(25, 0, 0, 0),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(25, 0, 0, 0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.15),
+                            blurRadius: 10,
+                            spreadRadius: 0,
+                            offset: Offset(0, 0),
+                          ),
+                        ],
+                      ),
                       child: BottomNavigationBar(
                         showSelectedLabels: false,
                         showUnselectedLabels: false,
