@@ -425,6 +425,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 }
 
+
+
+
+
+
+
+
+
+
+
 //
 // body: Container(
 //         width: double.infinity,
@@ -449,4 +459,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
 // 	   )
 // 	)
 //     )
+// )
 // )
