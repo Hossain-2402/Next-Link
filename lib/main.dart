@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'log_in_screen.dart';
+import 'feed_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 const String supabaseUrl = 'https://rvcociafgfxvkgehunam.supabase.co';
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'NextLink',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-      home: LogInScreen(),
+      home: FeedScreen(),
     );
   }
 }
