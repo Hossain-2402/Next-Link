@@ -49,26 +49,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
 
       if (response.user != null) {
-        _email.clear();
-        _password.clear();
+        try {
+          await supabase.from('users').insert({
+            'user_name': _userName.text.trim(),
+            'user_email': _email.text.trim(),
+            'profile_pic_url': _netImage,
+          });
+        } catch (e) {
+          print(e);
+        }
         Navigator.push(
           context,
           PageTransition(
-            child: const FeedScreen(),
+            child: FeedScreen(
+              userName: _userName.text.trim(),
+              profilePic: _netImage,
+            ),
             type: PageTransitionType.scaleFade,
             duration: const Duration(milliseconds: 500),
             curve: Curves.easeOutBack,
           ),
         );
 
-        try {
-          await supabase.from('users').insert({
-            'user_name': "asd",
-            'profile_pic_url': "link",
-          });
-        } catch (e) {
-          print("Nothing");
-        }
+        _email.clear();
+        _password.clear();
       }
     } catch (e) {}
   }
@@ -118,7 +122,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             colors: [
               Color.fromARGB(255, 168, 210, 255),
               // Color.fromARGB(255, 210, 245, 235),
-              Color.fromARGB(255, 255, 255, 255),
               Color.fromARGB(255, 255, 255, 255),
             ],
           ),
@@ -227,9 +230,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // Focused border style
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color:
-                              Colors.white, // Change the focused border color
-                          width: 3.0, // Change the focused border width
+                          color: Colors
+                              .transparent, // Change the focused border color
+                          width: 0.0, // Change the focused border width
                         ),
                         borderRadius: BorderRadius.all(
                           Radius.circular(
@@ -284,9 +287,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // Focused border style
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color:
-                              Colors.white, // Change the focused border color
-                          width: 3.0, // Change the focused border width
+                          color: Colors
+                              .transparent, // Change the focused border color
+                          width: 0.0, // Change the focused border width
                         ),
                         borderRadius: BorderRadius.all(
                           Radius.circular(
@@ -335,9 +338,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // Focused border style
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color:
-                              Colors.white, // Change the focused border color
-                          width: 3.0, // Change the focused border width
+                          color: Colors
+                              .transparent, // Change the focused border color
+                          width: 0.0, // Change the focused border width
                         ),
                         borderRadius: BorderRadius.all(
                           Radius.circular(
@@ -424,16 +427,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 //
 // body: Container(

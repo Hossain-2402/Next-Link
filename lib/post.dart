@@ -26,7 +26,7 @@ class _PostScreenState extends State<PostScreen> {
               Color.fromARGB(255, 168, 210, 255),
               // Color.fromARGB(255, 210, 245, 235),
               Color.fromARGB(255, 255, 255, 255),
-              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255)
             ],
           ),
         ),

@@ -43,20 +43,26 @@ class _LogInScreenState extends State<LogInScreen> {
       );
 
       if (response.user != null) {
+        final response = await supabase
+            .from('users')
+            .select('user_name, profile_pic_url')
+            .eq('user_email', _email.text.trim())
+            .single();
+
+        final String userName = response['user_name'];
+        final String profilePicUrl = response['profile_pic_url'];
+        print(userName);
+        print(profilePicUrl);
+
         Navigator.push(
           context,
           PageTransition(
-            child: const FeedScreen(),
+            child: FeedScreen(userName: userName, profilePic: profilePicUrl),
             type: PageTransitionType.scaleFade,
             duration: const Duration(milliseconds: 500),
             curve: Curves.easeOutBack,
           ),
         );
-
-
-
-
-
       }
     } catch (e) {
       _showMessage('Sign in failed: ${e.toString()}');
@@ -82,7 +88,6 @@ class _LogInScreenState extends State<LogInScreen> {
             colors: [
               Color.fromARGB(255, 168, 210, 255),
               // Color.fromARGB(255, 210, 245, 235),
-              Color.fromARGB(255, 255, 255, 255),
               Color.fromARGB(255, 255, 255, 255),
             ],
           ),
@@ -148,7 +153,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.white, // Change the border color
+                                color: Colors.transparent, // Change the border color
                                 width: 0.0, // Change the border width
                               ),
                               borderRadius: BorderRadius.all(
@@ -161,8 +166,8 @@ class _LogInScreenState extends State<LogInScreen> {
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Colors
-                                    .white, // Change the focused border color
-                                width: 3.0, // Change the focused border width
+                                    .transparent, // Change the focused border color
+                                width: 0.0, // Change the focused border width
                               ),
                               borderRadius: BorderRadius.all(
                                 Radius.circular(
@@ -199,7 +204,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.white, // Change the border color
+                                color: Colors.transparent, // Change the border color
                                 width: 0.0, // Change the border width
                               ),
                               borderRadius: BorderRadius.all(
@@ -212,8 +217,8 @@ class _LogInScreenState extends State<LogInScreen> {
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Colors
-                                    .white, // Change the focused border color
-                                width: 3.0, // Change the focused border width
+                                    .transparent, // Change the focused border color
+                                width: 0.0, // Change the focused border width
                               ),
                               borderRadius: BorderRadius.all(
                                 Radius.circular(
@@ -311,3 +316,4 @@ class _LogInScreenState extends State<LogInScreen> {
     );
   }
 }
+
