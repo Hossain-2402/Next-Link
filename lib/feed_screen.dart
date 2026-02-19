@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'post.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class FeedScreen extends StatefulWidget {
   final String? userName;
@@ -16,23 +18,104 @@ class FeedScreen extends StatefulWidget {
   _FeedPageState createState() => _FeedPageState();
 }
 
+final supabase = Supabase.instance.client;
+
+
+
 class _FeedPageState extends State<FeedScreen> {
   int currentIndex = 1;
 
   String? theUserName;
   String? thePP;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   setState(() {
-  //     theUserName = widget.userName ?? "";
-  //     thePP = widget.profilePic ?? "";
-  //   });
-  //   print("From FeedScreen:");
-  //   print(widget.userName);
-  //   print(widget.profilePic);
-  // }
+   List<Map<String, dynamic>> posts = [];
+    // {
+    //   "profileImage": "https://randomuser.me/api/portraits/men/1.jpg",
+    //   "userName": "Rahim",
+    //   "caption":
+    //   "Discover adventure in Patagonia's peaks or serenity in Provence",
+    //   "postImage":
+    //   "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+    // },
+    // {
+    //   "profileImage": "https://randomuser.me/api/portraits/women/2.jpg",
+    //   "userName": "Selim",
+    //   "caption": "Chasing sunsets and city lights",
+    //   "postImage":
+    //   "https://cdn.pixabay.com/photo/2016/11/19/18/06/feet-1840619_640.jpg",
+    // },
+    // {
+    //   "profileImage": "https://randomuser.me/api/portraits/men/3.jpg",
+    //   "userName": "Sakif",
+    //   "caption":
+    //   "Fitness is not about being better than someone else. It's about being better than you used to be",
+    //   "postImage":
+    //   "https://images.unsplash.com/photo-1554284126-aa88f22d8b74",
+    // },
+    // {
+    //   "profileImage": "https://randomuser.me/api/portraits/women/4.jpg",
+    //   "userName": "Karim",
+    //   "caption": "Beach days are the best days",
+    //   "postImage":
+    //   "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+    // },
+    // {
+    //   "profileImage": "https://randomuser.me/api/portraits/men/5.jpg",
+    //   "userName": "Hossain",
+    //   "caption": "Late night coding sessions with coffee",
+    //   "postImage":
+    //   "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
+    // },
+    // {
+    //   "profileImage": "https://randomuser.me/api/portraits/women/6.jpg",
+    //   "userName": "Tosin",
+    //   "caption": "Nature heals everything",
+    //   "postImage":
+    //   "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+    // },
+
+
+
+
+  Future<void> fetch_post() async {
+    try {
+      final data = await Supabase.instance.client
+          .from('posts')
+          .select()
+          .order('created_at', ascending: false);
+
+      setState(() {
+        // Mapping manually ensures that even if a DB cell is NULL,
+        // your app receives an empty String '' instead of a crash.
+        posts = (data as List).map((index) {
+          return {
+            'profileImage': index['profileImage']?.toString() ?? '',
+            'userName': index['userName']?.toString() ?? 'Anonymous',
+            'caption': index['caption']?.toString() ?? '',
+            'postImage': index['postImage']?.toString() ?? '',
+          };
+        }).toList();
+      });
+    } catch (e) {
+      print("Fetch Error: $e");
+    }
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    fetch_post();
+    // setState(() {
+    //   theUserName = widget.userName ?? "";
+    //   thePP = widget.profilePic ?? "";
+    // });
+    // print("From FeedScreen:");
+    // print(widget.userName);
+    // print(widget.profilePic);
+  }
+
+
 
   Widget _postWidget({
     required String profileImage,
@@ -100,70 +183,27 @@ class _FeedPageState extends State<FeedScreen> {
             end: Alignment.bottomCenter,
             colors: [
               Color.fromARGB(255, 168, 210, 255),
-              // Color.fromARGB(255, 210, 245, 235),
               Color.fromARGB(255, 255, 255, 255),
             ],
           ),
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 250),
-              _postWidget(
-                profileImage: widget.profilePic ?? "",
-                userName: widget.userName ?? "",
-                caption:
-                    "Discover adventure in Patagonia's peaks or serenity in Provence",
-                postImage:
-                    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-              ),
-
-              _postWidget(
-                profileImage: "https://randomuser.me/api/portraits/women/2.jpg",
-                userName: "Selim",
-                caption: "Chasing sunsets and city lights ",
-                postImage:
-                    "https://cdn.pixabay.com/photo/2016/11/19/18/06/feet-1840619_640.jpg",
-              ),
-
-              _postWidget(
-                profileImage: "https://randomuser.me/api/portraits/men/3.jpg",
-                userName: "Sakif",
-                caption:
-                    "Fitness is not about being better than someone else. It's about being better than you used to be",
-                postImage:
-                    "https://images.unsplash.com/photo-1554284126-aa88f22d8b74",
-              ),
-
-              _postWidget(
-                profileImage: "https://randomuser.me/api/portraits/women/4.jpg",
-                userName: "Karim",
-                caption: "Beach days are the best days ",
-                postImage:
-                    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
-              ),
-
-              _postWidget(
-                profileImage: "https://randomuser.me/api/portraits/men/5.jpg",
-                userName: "Hossain",
-                caption: "Late night coding sessions with coffee ",
-                postImage:
-                    "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
-              ),
-
-              _postWidget(
-                profileImage: "https://randomuser.me/api/portraits/women/6.jpg",
-                userName: "Tosin",
-                caption: "Nature heals everything ",
-                postImage:
-                    "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-              ),
-            ],
-          ),
+        child: ListView.builder(
+          padding: EdgeInsets.only(top: 250, bottom: 120),
+          itemCount: posts.length,
+          itemBuilder: (context, index) {
+            final post = posts[index];
+            return _postWidget(
+              profileImage: post["profileImage"]!,
+              userName: post["userName"]!,
+              caption: post["caption"]!,
+              postImage: post["postImage"]!,
+            );
+          },
         ),
       ),
     );
   }
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -193,7 +233,22 @@ class _FeedPageState extends State<FeedScreen> {
       body: Stack(
         children: [
           pages[currentIndex],
-
+          ElevatedButton(
+            onPressed: () async {
+              try {
+                await supabase.from('posts').insert({
+                  "profile_image": "https://randomuser.me/api/portraits/women/6.jpg",
+                  "user_name": "Tosin",
+                  "caption": "Nature heals everything",
+                  "post_image":
+                  "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+                });
+              } catch (e) {
+                print(e);
+              }
+            },
+            child: const Text('Post Now'),
+          ),
           Positioned(
             left: 0,
             right: 0,
