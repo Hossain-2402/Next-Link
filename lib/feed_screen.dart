@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nextlink/profile.dart';
 import 'dart:ui' as ui;
 import 'post.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -361,14 +362,7 @@ class _FeedPageState extends State<FeedScreen> {
       _feedPage(),
 
       // RIGHT PAGE
-      Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: Image.network(
-          "https://imgs.search.brave.com/OcvkwtrQcsvMdsChQFkoxM53XhsWoFpzhM30FmKJRn8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvaGQvZjEt/cGhvbmUteWVsbG93/LXJlZC1mb3JtdWxh/LWNhci04a2VvczN1/cTRmdW5lcWR1LmpwZw",
-          fit: BoxFit.cover,
-        ),
-      ),
+      ProfilePage(),
     ];
 
     return Scaffold(
