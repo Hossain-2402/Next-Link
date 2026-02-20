@@ -74,6 +74,39 @@ class _FeedPageState extends State<FeedScreen> {
   //   "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
   // },
 
+  List<Map<String, String>> stories = [
+    {
+      "profileImage": "https://randomuser.me/api/portraits/men/1.jpg",
+      "storyImage":
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+    },
+    {
+      "profileImage": "https://randomuser.me/api/portraits/women/2.jpg",
+      "storyImage":
+      "https://cdn.pixabay.com/photo/2016/11/19/18/06/feet-1840619_640.jpg",
+    },
+    {
+      "profileImage": "https://randomuser.me/api/portraits/men/3.jpg",
+      "storyImage":
+      "https://images.unsplash.com/photo-1554284126-aa88f22d8b74",
+    },
+    {
+      "profileImage": "https://randomuser.me/api/portraits/women/4.jpg",
+      "storyImage":
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+    },
+    {
+      "profileImage": "https://randomuser.me/api/portraits/men/5.jpg",
+      "storyImage":
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
+    },
+    {
+      "profileImage": "https://randomuser.me/api/portraits/women/6.jpg",
+      "storyImage":
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+    },
+  ];
+
 
 
 
@@ -138,11 +171,28 @@ class _FeedPageState extends State<FeedScreen> {
             padding: EdgeInsets.fromLTRB(15, 15, 15, 10),
             child: Row(
               children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundImage: profileImage.isNotEmpty
-                      ? NetworkImage(profileImage)
-                      : null,
+                ClipOval(
+                  child: profileImage.isNotEmpty
+                      ? Image.network(
+                    profileImage,
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: 40,
+                        height: 40,
+                        color: Colors.grey[300],
+                        child: Icon(Icons.person, size: 20),
+                      );
+                    },
+                  )
+                      : Container(
+                    width: 40,
+                    height: 40,
+                    color: Colors.grey[300],
+                    child: Icon(Icons.person, size: 20),
+                  ),
                 ),
                 SizedBox(width: 10),
                 Text(
@@ -176,6 +226,85 @@ class _FeedPageState extends State<FeedScreen> {
     );
   }
 
+  Widget _storyWidget({
+    required String profileImage,
+    required String storyImage,
+  }) {
+    return Container(
+      width: 120,
+      height: 180,
+      margin: EdgeInsets.only(left: 10),
+      child: Stack(
+        children: [
+
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(
+              storyImage,
+              width: 120,
+              height: 180,
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          Positioned(
+            top: 8,
+            left: 8,
+            child: ClipOval(
+              child: profileImage.isNotEmpty
+                  ? Image.network(
+                profileImage,
+                width: 32,
+                height: 32,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: 32,
+                    height: 32,
+                    color: Colors.grey[300],
+                    child: Icon(Icons.person, size: 16),
+                  );
+                },
+              )
+                  : Container(
+                width: 32,
+                height: 32,
+                color: Colors.grey[300],
+                child: Icon(Icons.person, size: 16),
+              ),
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
+
+
+  Widget _storiesSection() {
+    return Positioned(
+      top: 60,
+      left: 0,
+      right: 0,
+      child: SizedBox(
+        height: 190,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: stories.length,
+          itemBuilder: (context, index) {
+            final story = stories[index];
+
+            return _storyWidget(
+              profileImage: story["profileImage"]!,
+              storyImage: story["storyImage"]!,
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+
   Widget _feedPage() {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -192,22 +321,49 @@ class _FeedPageState extends State<FeedScreen> {
             ],
           ),
         ),
-        child: ListView.builder(
-          padding: EdgeInsets.only(top: 250, bottom: 120),
-          itemCount: posts.length,
-          itemBuilder: (context, index) {
-            final post = posts[index];
-            return _postWidget(
-              profileImage: post["profileImage"]!,
-              userName: post["userName"]!,
-              caption: post["caption"]!,
-              postImage: post["postImage"]!,
-            );
-          },
+
+        child: ListView(
+          padding: EdgeInsets.only(bottom: 120),
+
+          children: [
+
+            /// STORIES
+            SizedBox(height: 60),
+
+            SizedBox(
+              height: 190,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: stories.length,
+                itemBuilder: (context, index) {
+                  final story = stories[index];
+
+                  return _storyWidget(
+                    profileImage: story["profileImage"]!,
+                    storyImage: story["storyImage"]!,
+                  );
+                },
+              ),
+            ),
+
+            SizedBox(height: 20),
+
+            /// POSTS
+            ...posts.map((post) {
+              return _postWidget(
+                profileImage: post["profileImage"]!,
+                userName: post["userName"]!,
+                caption: post["caption"]!,
+                postImage: post["postImage"]!,
+              );
+            }).toList(),
+
+          ],
         ),
       ),
     );
   }
+
 
 
   void _onItemTapped(int index) {
