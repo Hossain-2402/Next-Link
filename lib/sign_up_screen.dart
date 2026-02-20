@@ -83,10 +83,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     await supabase.storage
         .from('images')
         .uploadBinary(
-      fileName,
-      bytes,
-      fileOptions: const FileOptions(contentType: 'image/jpeg'),
-    );
+          fileName,
+          bytes,
+          fileOptions: const FileOptions(contentType: 'image/jpeg'),
+        );
 
     return supabase.storage.from('images').getPublicUrl(fileName);
   }
@@ -172,8 +172,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     foregroundImage: _pickedImage != null
                         ? NetworkImage(_netImage!)
                         : NetworkImage(
-                      "https://imgs.search.brave.com/uDEcwBKmk2pulTQswWm7XSMR4qrHMDyagzZBYVIMHLs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvNTAwcC8y/OC82Ni9ncmF5LXBy/b2ZpbGUtc2lsaG91/ZXR0ZS1hdmF0YXIt/dmVjdG9yLTIxNTQy/ODY2LmpwZw",
-                    ),
+                            "https://imgs.search.brave.com/uDEcwBKmk2pulTQswWm7XSMR4qrHMDyagzZBYVIMHLs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvNTAwcC8y/OC82Ni9ncmF5LXBy/b2ZpbGUtc2lsaG91/ZXR0ZS1hdmF0YXIt/dmVjdG9yLTIxNTQy/ODY2LmpwZw",
+                          ),
                   ),
                   //const SizedBox(height: 5),
                   Positioned(

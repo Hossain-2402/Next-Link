@@ -153,7 +153,8 @@ class _LogInScreenState extends State<LogInScreen> {
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.transparent, // Change the border color
+                                color: Colors
+                                    .transparent, // Change the border color
                                 width: 0.0, // Change the border width
                               ),
                               borderRadius: BorderRadius.all(
@@ -204,7 +205,8 @@ class _LogInScreenState extends State<LogInScreen> {
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.transparent, // Change the border color
+                                color: Colors
+                                    .transparent, // Change the border color
                                 width: 0.0, // Change the border width
                               ),
                               borderRadius: BorderRadius.all(
