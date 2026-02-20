@@ -280,6 +280,55 @@ class _FeedPageState extends State<FeedScreen> {
     );
   }
 
+  Widget _headerSection() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10), // equal top & bottom padding
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+
+          /// LEFT: APP LOGO (same size as profile pic)
+          ClipOval(
+            child: Image.asset(
+              'LOGO.png',
+              width: 66,
+              height: 66,
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          /// CENTER: APP NAME
+          Text(
+            "Next Link",
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          /// RIGHT: USER PROFILE PIC
+          ClipOval(
+            child: widget.profilePic != null &&
+                widget.profilePic!.isNotEmpty
+                ? Image.network(
+              widget.profilePic!,
+              width: 36,
+              height: 36,
+              fit: BoxFit.cover,
+            )
+                : Container(
+              width: 36,
+              height: 36,
+              color: Colors.grey[300],
+              child: Icon(Icons.person, size: 18),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
 
   Widget _storiesSection() {
     return Positioned(
@@ -317,19 +366,21 @@ class _FeedPageState extends State<FeedScreen> {
             end: Alignment.bottomCenter,
             colors: [
               Color.fromARGB(255, 168, 210, 255),
-              Color.fromARGB(255, 255, 255, 255),
+              Colors.white,
             ],
           ),
         ),
 
         child: ListView(
           padding: EdgeInsets.only(bottom: 120),
-
           children: [
 
-            /// STORIES
-            SizedBox(height: 60),
+            /// HEADER
+            _headerSection(),
 
+            SizedBox(height: 25),
+
+            /// STORIES
             SizedBox(
               height: 190,
               child: ListView.builder(
@@ -346,7 +397,7 @@ class _FeedPageState extends State<FeedScreen> {
               ),
             ),
 
-            SizedBox(height: 20),
+            SizedBox(height: 10),
 
             /// POSTS
             ...posts.map((post) {
@@ -363,6 +414,7 @@ class _FeedPageState extends State<FeedScreen> {
       ),
     );
   }
+
 
 
 
