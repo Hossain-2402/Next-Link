@@ -76,33 +76,37 @@ class _FeedPageState extends State<FeedScreen> {
     {
       "profileImage": "https://randomuser.me/api/portraits/men/1.jpg",
       "storyImage":
-          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
     },
     {
       "profileImage": "https://randomuser.me/api/portraits/women/2.jpg",
       "storyImage":
-          "https://cdn.pixabay.com/photo/2016/11/19/18/06/feet-1840619_640.jpg",
+      "https://cdn.pixabay.com/photo/2016/11/19/18/06/feet-1840619_640.jpg",
     },
     {
       "profileImage": "https://randomuser.me/api/portraits/men/3.jpg",
-      "storyImage": "https://images.unsplash.com/photo-1554284126-aa88f22d8b74",
+      "storyImage":
+      "https://images.unsplash.com/photo-1554284126-aa88f22d8b74",
     },
     {
       "profileImage": "https://randomuser.me/api/portraits/women/4.jpg",
       "storyImage":
-          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
     },
     {
       "profileImage": "https://randomuser.me/api/portraits/men/5.jpg",
       "storyImage":
-          "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
     },
     {
       "profileImage": "https://randomuser.me/api/portraits/women/6.jpg",
       "storyImage":
-          "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
     },
   ];
+
+
+
 
   Future<void> fetch_post() async {
     try {
@@ -122,6 +126,7 @@ class _FeedPageState extends State<FeedScreen> {
             'postImage': index['post_image']?.toString() ?? '',
           };
         }).toList();
+
       });
     } catch (e) {
       print("Fetch Error: $e");
@@ -164,25 +169,25 @@ class _FeedPageState extends State<FeedScreen> {
                 ClipOval(
                   child: profileImage.isNotEmpty
                       ? Image.network(
-                          profileImage,
-                          width: 40,
-                          height: 40,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              width: 40,
-                              height: 40,
-                              color: Colors.grey[300],
-                              child: Icon(Icons.person, size: 20),
-                            );
-                          },
-                        )
+                    profileImage,
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: 40,
+                        height: 40,
+                        color: Colors.grey[300],
+                        child: Icon(Icons.person, size: 20),
+                      );
+                    },
+                  )
                       : Container(
-                          width: 40,
-                          height: 40,
-                          color: Colors.grey[300],
-                          child: Icon(Icons.person, size: 20),
-                        ),
+                    width: 40,
+                    height: 40,
+                    color: Colors.grey[300],
+                    child: Icon(Icons.person, size: 20),
+                  ),
                 ),
                 SizedBox(width: 10),
                 Text(
@@ -199,17 +204,17 @@ class _FeedPageState extends State<FeedScreen> {
           ),
 
           Container(
-            height: 300,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
+              height: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
               ),
-            ),
-            width: double.infinity,
-            child: postImage.isNotEmpty
-                ? Image.network(postImage, fit: BoxFit.cover)
-                : SizedBox(),
+              width: double.infinity,
+              child: postImage.isNotEmpty
+                  ? Image.network(postImage, fit: BoxFit.cover)
+                  : SizedBox()
           ),
         ],
       ),
@@ -226,6 +231,7 @@ class _FeedPageState extends State<FeedScreen> {
       margin: EdgeInsets.only(left: 10),
       child: Stack(
         children: [
+
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Image.network(
@@ -242,31 +248,82 @@ class _FeedPageState extends State<FeedScreen> {
             child: ClipOval(
               child: profileImage.isNotEmpty
                   ? Image.network(
-                      profileImage,
-                      width: 32,
-                      height: 32,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          width: 32,
-                          height: 32,
-                          color: Colors.grey[300],
-                          child: Icon(Icons.person, size: 16),
-                        );
-                      },
-                    )
+                profileImage,
+                width: 32,
+                height: 32,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: 32,
+                    height: 32,
+                    color: Colors.grey[300],
+                    child: Icon(Icons.person, size: 16),
+                  );
+                },
+              )
                   : Container(
-                      width: 32,
-                      height: 32,
-                      color: Colors.grey[300],
-                      child: Icon(Icons.person, size: 16),
-                    ),
+                width: 32,
+                height: 32,
+                color: Colors.grey[300],
+                child: Icon(Icons.person, size: 16),
+              ),
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
+
+  Widget _headerSection() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10), // equal top & bottom padding
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+
+          /// LEFT: APP LOGO (same size as profile pic)
+          ClipOval(
+            child: Image.asset(
+              'LOGO.png',
+              width: 66,
+              height: 66,
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          /// CENTER: APP NAME
+          Text(
+            "Next Link",
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          /// RIGHT: USER PROFILE PIC
+          ClipOval(
+            child: widget.profilePic != null &&
+                widget.profilePic!.isNotEmpty
+                ? Image.network(
+              widget.profilePic!,
+              width: 36,
+              height: 36,
+              fit: BoxFit.cover,
+            )
+                : Container(
+              width: 36,
+              height: 36,
+              color: Colors.grey[300],
+              child: Icon(Icons.person, size: 18),
             ),
           ),
         ],
       ),
     );
   }
+
+
 
   Widget _storiesSection() {
     return Positioned(
@@ -291,6 +348,7 @@ class _FeedPageState extends State<FeedScreen> {
     );
   }
 
+
   Widget _feedPage() {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -303,18 +361,21 @@ class _FeedPageState extends State<FeedScreen> {
             end: Alignment.bottomCenter,
             colors: [
               Color.fromARGB(255, 168, 210, 255),
-              Color.fromARGB(255, 255, 255, 255),
+              Colors.white,
             ],
           ),
         ),
 
         child: ListView(
           padding: EdgeInsets.only(bottom: 120),
-
           children: [
-            /// STORIES
-            SizedBox(height: 60),
 
+            /// HEADER
+            _headerSection(),
+
+            SizedBox(height: 25),
+
+            /// STORIES
             SizedBox(
               height: 190,
               child: ListView.builder(
@@ -331,7 +392,7 @@ class _FeedPageState extends State<FeedScreen> {
               ),
             ),
 
-            SizedBox(height: 20),
+            SizedBox(height: 10),
 
             /// POSTS
             ...posts.map((post) {
@@ -342,11 +403,15 @@ class _FeedPageState extends State<FeedScreen> {
                 postImage: post["postImage"]!,
               );
             }).toList(),
+
           ],
         ),
       ),
     );
   }
+
+
+
 
   void _onItemTapped(int index) {
     setState(() {
