@@ -28,51 +28,51 @@ class _FeedPageState extends State<FeedScreen> {
   String? theUserName;
   String? thePP;
 
-   List<Map<String, dynamic>> posts = [];
-    // {
-    //   "profileImage": "https://randomuser.me/api/portraits/men/1.jpg",
-    //   "userName": "Rahim",
-    //   "caption":
-    //   "Discover adventure in Patagonia's peaks or serenity in Provence",
-    //   "postImage":
-    //   "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-    // },
-    // {
-    //   "profileImage": "https://randomuser.me/api/portraits/women/2.jpg",
-    //   "userName": "Selim",
-    //   "caption": "Chasing sunsets and city lights",
-    //   "postImage":
-    //   "https://cdn.pixabay.com/photo/2016/11/19/18/06/feet-1840619_640.jpg",
-    // },
-    // {
-    //   "profileImage": "https://randomuser.me/api/portraits/men/3.jpg",
-    //   "userName": "Sakif",
-    //   "caption":
-    //   "Fitness is not about being better than someone else. It's about being better than you used to be",
-    //   "postImage":
-    //   "https://images.unsplash.com/photo-1554284126-aa88f22d8b74",
-    // },
-    // {
-    //   "profileImage": "https://randomuser.me/api/portraits/women/4.jpg",
-    //   "userName": "Karim",
-    //   "caption": "Beach days are the best days",
-    //   "postImage":
-    //   "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
-    // },
-    // {
-    //   "profileImage": "https://randomuser.me/api/portraits/men/5.jpg",
-    //   "userName": "Hossain",
-    //   "caption": "Late night coding sessions with coffee",
-    //   "postImage":
-    //   "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
-    // },
-    // {
-    //   "profileImage": "https://randomuser.me/api/portraits/women/6.jpg",
-    //   "userName": "Tosin",
-    //   "caption": "Nature heals everything",
-    //   "postImage":
-    //   "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-    // },
+  List<Map<String, dynamic>> posts = [];
+  // {
+  //   "profileImage": "https://randomuser.me/api/portraits/men/1.jpg",
+  //   "userName": "Rahim",
+  //   "caption":
+  //   "Discover adventure in Patagonia's peaks or serenity in Provence",
+  //   "postImage":
+  //   "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+  // },
+  // {
+  //   "profileImage": "https://randomuser.me/api/portraits/women/2.jpg",
+  //   "userName": "Selim",
+  //   "caption": "Chasing sunsets and city lights",
+  //   "postImage":
+  //   "https://cdn.pixabay.com/photo/2016/11/19/18/06/feet-1840619_640.jpg",
+  // },
+  // {
+  //   "profileImage": "https://randomuser.me/api/portraits/men/3.jpg",
+  //   "userName": "Sakif",
+  //   "caption":
+  //   "Fitness is not about being better than someone else. It's about being better than you used to be",
+  //   "postImage":
+  //   "https://images.unsplash.com/photo-1554284126-aa88f22d8b74",
+  // },
+  // {
+  //   "profileImage": "https://randomuser.me/api/portraits/women/4.jpg",
+  //   "userName": "Karim",
+  //   "caption": "Beach days are the best days",
+  //   "postImage":
+  //   "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+  // },
+  // {
+  //   "profileImage": "https://randomuser.me/api/portraits/men/5.jpg",
+  //   "userName": "Hossain",
+  //   "caption": "Late night coding sessions with coffee",
+  //   "postImage":
+  //   "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
+  // },
+  // {
+  //   "profileImage": "https://randomuser.me/api/portraits/women/6.jpg",
+  //   "userName": "Tosin",
+  //   "caption": "Nature heals everything",
+  //   "postImage":
+  //   "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+  // },
 
 
 
@@ -89,12 +89,13 @@ class _FeedPageState extends State<FeedScreen> {
         // your app receives an empty String '' instead of a crash.
         posts = (data as List).map((index) {
           return {
-            'profileImage': index['profileImage']?.toString() ?? '',
-            'userName': index['userName']?.toString() ?? 'Anonymous',
+            'profileImage': index['profile_image']?.toString() ?? '',
+            'userName': index['user_name']?.toString() ?? 'Anonymous',
             'caption': index['caption']?.toString() ?? '',
-            'postImage': index['postImage']?.toString() ?? '',
+            'postImage': index['post_image']?.toString() ?? '',
           };
         }).toList();
+
       });
     } catch (e) {
       print("Fetch Error: $e");
@@ -139,7 +140,9 @@ class _FeedPageState extends State<FeedScreen> {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundImage: NetworkImage(profileImage),
+                  backgroundImage: profileImage.isNotEmpty
+                      ? NetworkImage(profileImage)
+                      : null,
                 ),
                 SizedBox(width: 10),
                 Text(
@@ -156,15 +159,17 @@ class _FeedPageState extends State<FeedScreen> {
           ),
 
           Container(
-            height: 300,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
+              height: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
               ),
-            ),
-            width: double.infinity,
-            child: Image.network(postImage, fit: BoxFit.cover),
+              width: double.infinity,
+              child: postImage.isNotEmpty
+                  ? Image.network(postImage, fit: BoxFit.cover)
+                  : SizedBox()
           ),
         ],
       ),
@@ -233,22 +238,22 @@ class _FeedPageState extends State<FeedScreen> {
       body: Stack(
         children: [
           pages[currentIndex],
-          ElevatedButton(
-            onPressed: () async {
-              try {
-                await supabase.from('posts').insert({
-                  "profile_image": "https://randomuser.me/api/portraits/women/6.jpg",
-                  "user_name": "Tosin",
-                  "caption": "Nature heals everything",
-                  "post_image":
-                  "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-                });
-              } catch (e) {
-                print(e);
-              }
-            },
-            child: const Text('Post Now'),
-          ),
+          // ElevatedButton(
+          //   onPressed: () async {
+          //     try {
+          //       await supabase.from('posts').insert({
+          //         "profile_image": "https://randomuser.me/api/portraits/women/6.jpg",
+          //         "user_name": "Tosin",
+          //         "caption": "Nature heals everything",
+          //         "post_image":
+          //         "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          //       });
+          //     } catch (e) {
+          //       print(e);
+          //     }
+          //   },
+          //   child: const Text('Post Now'),
+          // ),
           Positioned(
             left: 0,
             right: 0,
