@@ -92,14 +92,8 @@ class _LogInScreenState extends State<LogInScreen> {
             ],
           ),
         ),
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints viewportConstraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: viewportConstraints.maxHeight,
-                ),
-                child: Column(
+        child: SingleChildScrollView(
+              child: Column(
                   children: [
                     SizedBox(height: 50),
                     Center(
@@ -311,9 +305,6 @@ class _LogInScreenState extends State<LogInScreen> {
                   ],
                 ),
               ),
-            );
-          },
-        ),
       ),
     );
   }
