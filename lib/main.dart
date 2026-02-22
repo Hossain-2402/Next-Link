@@ -3,6 +3,7 @@ import 'feed_screen.dart';
 import 'log_in_screen.dart';
 import 'post.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'splashscreen.dart';
 
 const String supabaseUrl = 'https://rvcociafgfxvkgehunam.supabase.co';
 const String supabaseAnonKey =
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'NextLink',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-      home: LogInScreen(),
+      home: SplashScreen(),
     );
   }
 }
