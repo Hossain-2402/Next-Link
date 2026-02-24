@@ -216,6 +216,37 @@ class _FeedPageState extends State<FeedScreen> {
                   ? Image.network(postImage, fit: BoxFit.cover)
                   : SizedBox()
           ),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+            child: Row(
+              children: [
+
+                /// LIKE BUTTON
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.favorite_border,
+                    size: 28,
+                    color: Colors.black,
+                  ),
+                ),
+
+                SizedBox(width: 10),
+
+                /// COMMENT BUTTON
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.chat_bubble_outline,
+                    size: 26,
+                    color: Colors.black,
+                  ),
+                ),
+
+              ],
+            ),
+          ),
         ],
       ),
     );
