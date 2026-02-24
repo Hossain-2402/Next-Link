@@ -30,39 +30,54 @@ class ProfilePage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // HEADER SECTION (points 2-5)
             Container(
               width: double.infinity,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Color(0xFFB3FFFD), Color(0xFFEFFFFF)],
+                  colors: [
+                    Color.fromARGB(255, 168, 210, 255),
+
+                    Color.fromARGB(255, 255, 255, 255),
+                  ],
                 ),
               ),
               child: Column(
                 children: [
-                  // 3) TOP BAR (EDIT + DROPDOWN REMOVED)
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
-                    ),
-                    child: const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Darlene',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ClipOval(
+                          child: Image.asset(
+                            'assets/LOGO.png',
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
+
+                        const Expanded(
+                          child: Center(
+                            child: Text(
+                              "Next Link",
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(width: 50),
+                      ],
                     ),
                   ),
 
                   const SizedBox(height: 16),
 
-                  // 4) PROFILE AVATAR
                   const CircleAvatar(
                     radius: 48,
                     backgroundImage: NetworkImage(
@@ -72,37 +87,32 @@ class ProfilePage extends StatelessWidget {
 
                   const SizedBox(height: 16),
 
-                  // 5) PROFILE NAME
                   const Text(
-                    'Darlene Beats',
+                    'Hossain Hossain',
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
                   ),
 
                   const SizedBox(height: 8),
 
-                  // USERNAME
                   const SizedBox(height: 24),
                 ],
               ),
             ),
 
-            // 13) TABS (ONLY POST) + 14-18 FEED SECTION
             Expanded(
               child: Container(
                 color: Colors.white,
                 child: Column(
                   children: [
-                    // 13) TABS (MENTION REMOVED)
+                    //
                     _buildTabs(),
 
                     const Divider(height: 1),
 
-                    // 18) FEED LIST
                     Expanded(
                       child: ListView(
                         padding: const EdgeInsets.all(16),
                         children: const [
-                          // 14) POST CARD
                           PostCard(),
                           SizedBox(height: 16),
                           PostCard(),
@@ -119,7 +129,6 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  // 13) TABS WIDGET (ONLY POST TAB)
   Widget _buildTabs() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -136,7 +145,7 @@ class ProfilePage extends StatelessWidget {
               ],
             ),
           ),
-          // Tab indicator
+
           Container(height: 2, color: Colors.black),
         ],
       ),
@@ -144,7 +153,6 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-// 14) POST CARD WIDGET
 class PostCard extends StatelessWidget {
   const PostCard({super.key});
 
@@ -166,24 +174,20 @@ class PostCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 15) POST HEADER
           _buildHeader(),
 
           const SizedBox(height: 12),
 
-          // 16) POST CAPTION
           _buildCaption(),
 
           const SizedBox(height: 12),
 
-          // 17) POST IMAGE
           _buildImage(),
         ],
       ),
     );
   }
 
-  // 15) POST HEADER (avatar, name, timestamp)
   Widget _buildHeader() {
     return Row(
       children: [
@@ -198,7 +202,7 @@ class PostCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             Text(
-              'Nilesh',
+              'Rafi',
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
             SizedBox(height: 2),
@@ -208,7 +212,6 @@ class PostCard extends StatelessWidget {
     );
   }
 
-  // 16) POST CAPTION TEXT
   Widget _buildCaption() {
     return RichText(
       text: const TextSpan(
@@ -228,7 +231,6 @@ class PostCard extends StatelessWidget {
     );
   }
 
-  // 17) POST IMAGE
   Widget _buildImage() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(14),

@@ -35,46 +35,60 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> _signUp() async {
-    if (_email.text.isEmpty ||
-        _password.text.isEmpty ||
-        _netImage == avaterImage ||
-        _userName.text.isEmpty) {
-      return;
-    }
+    Navigator.push(
+      context,
+      PageTransition(
+        child: FeedScreen(
+          userName: "UserName",
+          profilePic:
+              "https://imgs.search.brave.com/awksT_Zoh8G9Qn5d-CbZP4gAPcl0EDxLP0J88fgAnB4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNTg3/ODA1MTU2L3ZlY3Rv/ci9wcm9maWxlLXBp/Y3R1cmUtdmVjdG9y/LWlsbHVzdHJhdGlv/bi5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9Z2t2TERDZ3NI/SC04SGVRZTdKc2po/bE9ZNnZSQkprX3NL/VzlseWFMZ21Mbz0",
+        ),
+        type: PageTransitionType.scaleFade,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeOutBack,
+      ),
+    );
 
-    try {
-      final response = await supabase.auth.signUp(
-        email: _email.text.trim(),
-        password: _password.text.trim(),
-      );
-
-      if (response.user != null) {
-        try {
-          await supabase.from('users').insert({
-            'user_name': _userName.text.trim(),
-            'user_email': _email.text.trim(),
-            'profile_pic_url': _netImage,
-          });
-        } catch (e) {
-          print(e);
-        }
-        Navigator.push(
-          context,
-          PageTransition(
-            child: FeedScreen(
-              userName: _userName.text.trim(),
-              profilePic: _netImage,
-            ),
-            type: PageTransitionType.scaleFade,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeOutBack,
-          ),
-        );
-
-        _email.clear();
-        _password.clear();
-      }
-    } catch (e) {}
+    // if (_email.text.isEmpty ||
+    //     _password.text.isEmpty ||
+    //     _netImage == avaterImage ||
+    //     _userName.text.isEmpty) {
+    //   return;
+    // }
+    //
+    // try {
+    //   final response = await supabase.auth.signUp(
+    //     email: _email.text.trim(),
+    //     password: _password.text.trim(),
+    //   );
+    //
+    //   if (response.user != null) {
+    //     try {
+    //       await supabase.from('users').insert({
+    //         'user_name': _userName.text.trim(),
+    //         'user_email': _email.text.trim(),
+    //         'profile_pic_url': _netImage,
+    //       });
+    //     } catch (e) {
+    //       print(e);
+    //     }
+    //     Navigator.push(
+    //       context,
+    //       PageTransition(
+    //         child: FeedScreen(
+    //           userName: _userName.text.trim(),
+    //           profilePic: _netImage,
+    //         ),
+    //         type: PageTransitionType.scaleFade,
+    //         duration: const Duration(milliseconds: 500),
+    //         curve: Curves.easeOutBack,
+    //       ),
+    //     );
+    //
+    //     _email.clear();
+    //     _password.clear();
+    //   }
+    // } catch (e) {}
   }
 
   Future<String> uploadBytes(Uint8List bytes) async {

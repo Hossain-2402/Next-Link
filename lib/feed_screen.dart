@@ -26,51 +26,53 @@ class _FeedPageState extends State<FeedScreen> {
   String? theUserName;
   String? thePP;
 
-  List<Map<String, dynamic>> posts = [];
-  // {
-  //   "profileImage": "https://randomuser.me/api/portraits/men/1.jpg",
-  //   "userName": "Rahim",
-  //   "caption":
-  //   "Discover adventure in Patagonia's peaks or serenity in Provence",
-  //   "postImage":
-  //   "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-  // },
-  // {
-  //   "profileImage": "https://randomuser.me/api/portraits/women/2.jpg",
-  //   "userName": "Selim",
-  //   "caption": "Chasing sunsets and city lights",
-  //   "postImage":
-  //   "https://cdn.pixabay.com/photo/2016/11/19/18/06/feet-1840619_640.jpg",
-  // },
-  // {
-  //   "profileImage": "https://randomuser.me/api/portraits/men/3.jpg",
-  //   "userName": "Sakif",
-  //   "caption":
-  //   "Fitness is not about being better than someone else. It's about being better than you used to be",
-  //   "postImage":
-  //   "https://images.unsplash.com/photo-1554284126-aa88f22d8b74",
-  // },
-  // {
-  //   "profileImage": "https://randomuser.me/api/portraits/women/4.jpg",
-  //   "userName": "Karim",
-  //   "caption": "Beach days are the best days",
-  //   "postImage":
-  //   "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
-  // },
-  // {
-  //   "profileImage": "https://randomuser.me/api/portraits/men/5.jpg",
-  //   "userName": "Hossain",
-  //   "caption": "Late night coding sessions with coffee",
-  //   "postImage":
-  //   "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
-  // },
-  // {
-  //   "profileImage": "https://randomuser.me/api/portraits/women/6.jpg",
-  //   "userName": "Tosin",
-  //   "caption": "Nature heals everything",
-  //   "postImage":
-  //   "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-  // },
+  // List<Map<String, dynamic>> posts = [];
+  List<Map<String, dynamic>> posts = [
+    {
+      "profileImage": "https://randomuser.me/api/portraits/men/1.jpg",
+      "userName": "Rahim",
+      "caption":
+          "Discover adventure in Patagonia's peaks or serenity in Provence",
+      "postImage":
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+    },
+    {
+      "profileImage": "https://randomuser.me/api/portraits/women/2.jpg",
+      "userName": "Selim",
+      "caption": "Chasing sunsets and city lights",
+      "postImage":
+          "https://imgs.search.brave.com/MR0VAZeSKSYTs6ZxfrFGIr4Z_ZgMDln0Ug-ECpeVqyk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMzAv/NzQ3LzY0OC9zbWFs/bC9hLW1vdW50YWlu/LWxha2Utd2l0aC1h/LW1vdW50YWluLWlu/LXRoZS1iYWNrZ3Jv/dW5kLWFuZC1sYW5k/c2NhcGUtd2FsbHBh/cGVyLWZyZWUtcGhv/dG8uanBn",
+    },
+    {
+      "profileImage": "https://randomuser.me/api/portraits/men/3.jpg",
+      "userName": "Sakif",
+      "caption":
+          "Fitness is not about being better than someone else. It's about being better than you used to be",
+      "postImage":
+          "https://imgs.search.brave.com/pDA3Q3W7qvIo_6Y4fZf88Y0PaXCzSs-O4IDYLTuDJts/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDEyNTg4/MDQwLmpwZw",
+    },
+    {
+      "profileImage": "https://randomuser.me/api/portraits/women/4.jpg",
+      "userName": "Karim",
+      "caption": "Beach days are the best days",
+      "postImage":
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+    },
+    {
+      "profileImage": "https://randomuser.me/api/portraits/men/5.jpg",
+      "userName": "Hossain",
+      "caption": "Late night coding sessions with coffee",
+      "postImage":
+          "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
+    },
+    {
+      "profileImage": "https://randomuser.me/api/portraits/women/6.jpg",
+      "userName": "Tosin",
+      "caption": "Nature heals everything",
+      "postImage":
+          "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+    },
+  ];
 
   List<Map<String, String>> stories = [
     {
@@ -85,7 +87,8 @@ class _FeedPageState extends State<FeedScreen> {
     },
     {
       "profileImage": "https://randomuser.me/api/portraits/men/3.jpg",
-      "storyImage": "https://images.unsplash.com/photo-1554284126-aa88f22d8b74",
+      "storyImage":
+          "https://imgs.search.brave.com/MR0VAZeSKSYTs6ZxfrFGIr4Z_ZgMDln0Ug-ECpeVqyk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMzAv/NzQ3LzY0OC9zbWFs/bC9hLW1vdW50YWlu/LWxha2Utd2l0aC1h/LW1vdW50YWluLWlu/LXRoZS1iYWNrZ3Jv/dW5kLWFuZC1sYW5k/c2NhcGUtd2FsbHBh/cGVyLWZyZWUtcGhv/dG8uanBn",
     },
     {
       "profileImage": "https://randomuser.me/api/portraits/women/4.jpg",
@@ -105,27 +108,27 @@ class _FeedPageState extends State<FeedScreen> {
   ];
 
   Future<void> fetch_post() async {
-    try {
-      final data = await Supabase.instance.client
-          .from('posts')
-          .select()
-          .order('created_at', ascending: false);
-
-      setState(() {
-        // Mapping manually ensures that even if a DB cell is NULL,
-        // your app receives an empty String '' instead of a crash.
-        posts = (data as List).map((index) {
-          return {
-            'profileImage': index['profile_image']?.toString() ?? '',
-            'userName': index['user_name']?.toString() ?? 'Anonymous',
-            'caption': index['caption']?.toString() ?? '',
-            'postImage': index['post_image']?.toString() ?? '',
-          };
-        }).toList();
-      });
-    } catch (e) {
-      print("Fetch Error: $e");
-    }
+    // try {
+    //   final data = await Supabase.instance.client
+    //       .from('posts')
+    //       .select()
+    //       .order('created_at', ascending: false);
+    //
+    //   setState(() {
+    //     // Mapping manually ensures that even if a DB cell is NULL,
+    //     // your app receives an empty String '' instead of a crash.
+    //     posts = (data as List).map((index) {
+    //       return {
+    //         'profileImage': index['profile_image']?.toString() ?? '',
+    //         'userName': index['user_name']?.toString() ?? 'Anonymous',
+    //         'caption': index['caption']?.toString() ?? '',
+    //         'postImage': index['post_image']?.toString() ?? '',
+    //       };
+    //     }).toList();
+    //   });
+    // } catch (e) {
+    //   print("Fetch Error: $e");
+    // }
   }
 
   @override
@@ -211,6 +214,35 @@ class _FeedPageState extends State<FeedScreen> {
                 ? Image.network(postImage, fit: BoxFit.cover)
                 : SizedBox(),
           ),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+            child: Row(
+              children: [
+                /// LIKE BUTTON
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.favorite_border,
+                    size: 28,
+                    color: Colors.black,
+                  ),
+                ),
+
+                SizedBox(width: 10),
+
+                /// COMMENT BUTTON
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.chat_bubble_outline,
+                    size: 26,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -268,6 +300,54 @@ class _FeedPageState extends State<FeedScreen> {
     );
   }
 
+  Widget _headerSection() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        10,
+        10,
+        10,
+        10,
+      ), // equal top & bottom padding
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          /// LEFT: APP LOGO (same size as profile pic)
+          ClipOval(
+            child: Image.asset(
+              'LOGO.png',
+              width: 66,
+              height: 66,
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          /// CENTER: APP NAME
+          Text(
+            "Next Link",
+            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+          ),
+
+          /// RIGHT: USER PROFILE PIC
+          ClipOval(
+            child: widget.profilePic != null && widget.profilePic!.isNotEmpty
+                ? Image.network(
+                    widget.profilePic!,
+                    width: 36,
+                    height: 36,
+                    fit: BoxFit.cover,
+                  )
+                : Container(
+                    width: 36,
+                    height: 36,
+                    color: Colors.grey[300],
+                    child: Icon(Icons.person, size: 18),
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _storiesSection() {
     return Positioned(
       top: 60,
@@ -294,6 +374,7 @@ class _FeedPageState extends State<FeedScreen> {
   Widget _feedPage() {
     return Scaffold(
       backgroundColor: Colors.white,
+
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -301,20 +382,19 @@ class _FeedPageState extends State<FeedScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 168, 210, 255),
-              Color.fromARGB(255, 255, 255, 255),
-            ],
+            colors: [Color.fromARGB(255, 168, 210, 255), Colors.white],
           ),
         ),
 
         child: ListView(
           padding: EdgeInsets.only(bottom: 120),
-
           children: [
-            /// STORIES
-            SizedBox(height: 60),
+            /// HEADER
+            _headerSection(),
 
+            SizedBox(height: 25),
+
+            /// STORIES
             SizedBox(
               height: 190,
               child: ListView.builder(
@@ -331,7 +411,7 @@ class _FeedPageState extends State<FeedScreen> {
               ),
             ),
 
-            SizedBox(height: 20),
+            SizedBox(height: 10),
 
             /// POSTS
             ...posts.map((post) {
@@ -401,7 +481,7 @@ class _FeedPageState extends State<FeedScreen> {
                     filter: ui.ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                     child: Container(
                       height: 80,
-                      width: 400,
+                      width: 350,
                       decoration: BoxDecoration(
                         color: Color.fromARGB(25, 0, 0, 0),
                         boxShadow: [
