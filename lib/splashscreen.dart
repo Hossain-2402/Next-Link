@@ -14,6 +14,7 @@ class SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   late final AnimationController animationController;
 
+
   void _changeState() {
     animationController = AnimationController(
       duration: Duration(milliseconds: 500),
