@@ -31,42 +31,52 @@ class _LogInScreenState extends State<LogInScreen> {
   }
 
   Future<void> _signIn() async {
-    if (_email.text.isEmpty || _password.text.isEmpty) {
-      _showMessage('Please fill in all fields');
-      return;
-    }
+    Navigator.push(
+      context,
+      PageTransition(
+        child: FeedScreen(userName: "UserName", profilePic: "https://imgs.search.brave.com/awksT_Zoh8G9Qn5d-CbZP4gAPcl0EDxLP0J88fgAnB4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNTg3/ODA1MTU2L3ZlY3Rv/ci9wcm9maWxlLXBp/Y3R1cmUtdmVjdG9y/LWlsbHVzdHJhdGlv/bi5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9Z2t2TERDZ3NI/SC04SGVRZTdKc2po/bE9ZNnZSQkprX3NL/VzlseWFMZ21Mbz0"),
+        type: PageTransitionType.scaleFade,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeOutBack,
+      ),
+    );
 
-    try {
-      final response = await supabase.auth.signInWithPassword(
-        email: _email.text.trim(),
-        password: _password.text.trim(),
-      );
-
-      if (response.user != null) {
-        final response = await supabase
-            .from('users')
-            .select('user_name, profile_pic_url')
-            .eq('user_email', _email.text.trim())
-            .single();
-
-        final String userName = response['user_name'];
-        final String profilePicUrl = response['profile_pic_url'];
-        print(userName);
-        print(profilePicUrl);
-
-        Navigator.push(
-          context,
-          PageTransition(
-            child: FeedScreen(userName: userName, profilePic: profilePicUrl),
-            type: PageTransitionType.scaleFade,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeOutBack,
-          ),
-        );
-      }
-    } catch (e) {
-      _showMessage('Sign in failed: ${e.toString()}');
-    }
+    // if (_email.text.isEmpty || _password.text.isEmpty) {
+    //   _showMessage('Please fill in all fields');
+    //   return;
+    // }
+    //
+    // try {
+    //   final response = await supabase.auth.signInWithPassword(
+    //     email: _email.text.trim(),
+    //     password: _password.text.trim(),
+    //   );
+    //
+    //   if (response.user != null) {
+    //     final response = await supabase
+    //         .from('users')
+    //         .select('user_name, profile_pic_url')
+    //         .eq('user_email', _email.text.trim())
+    //         .single();
+    //
+    //     final String userName = response['user_name'];
+    //     final String profilePicUrl = response['profile_pic_url'];
+    //     print(userName);
+    //     print(profilePicUrl);
+    //
+    //     Navigator.push(
+    //       context,
+    //       PageTransition(
+    //         child: FeedScreen(userName: userName, profilePic: profilePicUrl),
+    //         type: PageTransitionType.scaleFade,
+    //         duration: const Duration(milliseconds: 500),
+    //         curve: Curves.easeOutBack,
+    //       ),
+    //     );
+    //   }
+    // } catch (e) {
+    //   _showMessage('Sign in failed: ${e.toString()}');
+    // }
   }
 
   void _showMessage(String message) {
@@ -93,218 +103,216 @@ class _LogInScreenState extends State<LogInScreen> {
           ),
         ),
         child: SingleChildScrollView(
-              child: Column(
-                  children: [
-                    SizedBox(height: 50),
-                    Center(
-                      child: Container(
-                        height: 200,
-                        width: 400,
-                        child: Image(image: AssetImage('LOGO.png')),
+          child: Column(
+            children: [
+              SizedBox(height: 50),
+              Center(
+                child: Container(
+                  height: 200,
+                  width: 400,
+                  child: Image(image: AssetImage('LOGO.png')),
+                ),
+              ),
+              SizedBox(height: 5),
+              Text(
+                "Sign In",
+                style: GoogleFonts.lobster(
+                  textStyle: TextStyle(
+                    height: 3.5,
+                    color: Colors.black,
+                    fontSize: 35,
+                  ),
+                ),
+              ),
+              Text(
+                "Sign In to explore",
+                style: GoogleFonts.akayaKanadaka(
+                  textStyle: TextStyle(
+                    color: Colors.grey,
+                    height: 1,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              SizedBox(height: 60),
+              Container(
+                height: 70,
+                width: 350,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 5.0),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: Padding(
+                  padding: EdgeInsetsGeometry.fromLTRB(40, 15, 7, 15),
+                  child: TextFormField(
+                    controller: _email,
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.mail_rounded),
+                      focusColor: Colors.black12,
+                      labelText: 'Enter your email',
+                      labelStyle: TextStyle(fontSize: 15),
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: 10.0,
+                        horizontal: 12.0,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent, // Change the border color
+                          width: 0.0, // Change the border width
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            40.0,
+                          ), // Applies a 20px radius to all four corners
+                        ), // Optional: add border radius
+                      ),
+                      // Focused border style
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors
+                              .transparent, // Change the focused border color
+                          width: 0.0, // Change the focused border width
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            40.0,
+                          ), // Applies a 20px radius to all four corners
+                        ),
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Text(
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 25),
+              Container(
+                height: 70,
+                width: 350,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 5.0),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: Padding(
+                  padding: EdgeInsetsGeometry.fromLTRB(40, 10, 7, 10),
+                  child: TextFormField(
+                    controller: _password,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.lock),
+                      focusColor: Colors.black12,
+                      labelText: 'Enter your password',
+                      labelStyle: TextStyle(fontSize: 15),
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: 10.0,
+                        horizontal: 12.0,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent, // Change the border color
+                          width: 0.0, // Change the border width
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            40.0,
+                          ), // Applies a 20px radius to all four corners
+                        ), // Optional: add border radius
+                      ),
+                      // Focused border style
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors
+                              .transparent, // Change the focused border color
+                          width: 0.0, // Change the focused border width
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            40.0,
+                          ), // Applies a 20px radius to all four corners
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 100),
+              Container(
+                height: 50,
+                width: 350,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _signIn();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll<Color>(
+                      Color.fromARGB(255, 168, 210, 255),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsetsGeometry.all(15),
+                    child: Text(
                       "Sign In",
-                      style: GoogleFonts.lobster(
-                        textStyle: TextStyle(
-                          height: 3.5,
-                          color: Colors.black,
-                          fontSize: 35,
+                      style: GoogleFonts.aDLaMDisplay(
+                        textStyle: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Container(
+                height: 50,
+                width: 300,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsGeometry.fromLTRB(0, 15, 0, 10),
+                      child: Container(
+                        height: 50,
+                        width: 200,
+                        child: Text(
+                          "Don't have an account? ",
+                          textAlign: TextAlign.end,
+                          style: TextStyle(color: Colors.grey),
                         ),
                       ),
                     ),
-                    Text(
-                      "Sign In to explore",
-                      style: GoogleFonts.akayaKanadaka(
-                        textStyle: TextStyle(
-                          color: Colors.grey,
-                          height: 1,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 60),
-                    Container(
-                      height: 70,
-                      width: 350,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: 5.0),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsetsGeometry.fromLTRB(40, 15, 7, 15),
-                        child: TextFormField(
-                          controller: _email,
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.mail_rounded),
-                            focusColor: Colors.black12,
-                            labelText: 'Enter your email',
-                            labelStyle: TextStyle(fontSize: 15),
-                            contentPadding: EdgeInsets.symmetric(
-                              vertical: 10.0,
-                              horizontal: 12.0,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors
-                                    .transparent, // Change the border color
-                                width: 0.0, // Change the border width
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(
-                                  40.0,
-                                ), // Applies a 20px radius to all four corners
-                              ), // Optional: add border radius
-                            ),
-                            // Focused border style
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors
-                                    .transparent, // Change the focused border color
-                                width: 0.0, // Change the focused border width
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(
-                                  40.0,
-                                ), // Applies a 20px radius to all four corners
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 25),
-                    Container(
-                      height: 70,
-                      width: 350,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: 5.0),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsetsGeometry.fromLTRB(40, 10, 7, 10),
-                        child: TextFormField(
-                          controller: _password,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.lock),
-                            focusColor: Colors.black12,
-                            labelText: 'Enter your password',
-                            labelStyle: TextStyle(fontSize: 15),
-                            contentPadding: EdgeInsets.symmetric(
-                              vertical: 10.0,
-                              horizontal: 12.0,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors
-                                    .transparent, // Change the border color
-                                width: 0.0, // Change the border width
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(
-                                  40.0,
-                                ), // Applies a 20px radius to all four corners
-                              ), // Optional: add border radius
-                            ),
-                            // Focused border style
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors
-                                    .transparent, // Change the focused border color
-                                width: 0.0, // Change the focused border width
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(
-                                  40.0,
-                                ), // Applies a 20px radius to all four corners
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 100),
                     Container(
                       height: 50,
-                      width: 350,
-                      child: ElevatedButton(
+                      width: 100,
+                      child: TextButton(
                         onPressed: () {
-                          _signIn();
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              child: const SignUpScreen(),
+                              type: PageTransitionType.scaleFade,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeOutBack,
+                            ),
+                          );
                         },
-                        style: ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll<Color>(
-                            Color.fromARGB(255, 168, 210, 255),
-                          ),
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          alignment: Alignment.center,
                         ),
-                        child: Padding(
-                          padding: EdgeInsetsGeometry.all(15),
-                          child: Text(
-                            "Sign In",
-                            style: GoogleFonts.aDLaMDisplay(
-                              textStyle: TextStyle(color: Colors.black),
-                            ),
+                        child: Text(
+                          "Sign Up",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Container(
-                      height: 50,
-                      width: 300,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsGeometry.fromLTRB(0, 15, 0, 10),
-                            child: Container(
-                              height: 50,
-                              width: 200,
-                              child: Text(
-                                "Don't have an account? ",
-                                textAlign: TextAlign.end,
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 50,
-                            width: 100,
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    child: const SignUpScreen(),
-                                    type: PageTransitionType.scaleFade,
-                                    duration: const Duration(milliseconds: 500),
-                                    curve: Curves.easeOutBack,
-                                  ),
-                                );
-                              },
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                                alignment: Alignment.center,
-                              ),
-                              child: Text(
-                                "Sign Up",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(height: 100),
                   ],
                 ),
               ),
+
+              SizedBox(height: 100),
+            ],
+          ),
+        ),
       ),
     );
   }
