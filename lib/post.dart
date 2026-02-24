@@ -26,7 +26,7 @@ class _PostScreenState extends State<PostScreen> {
               Color.fromARGB(255, 168, 210, 255),
               // Color.fromARGB(255, 210, 245, 235),
               Color.fromARGB(255, 255, 255, 255),
-              Color.fromARGB(255, 255, 255, 255)
+              Color.fromARGB(255, 255, 255, 255),
             ],
           ),
         ),
@@ -151,6 +151,80 @@ class _PostScreenState extends State<PostScreen> {
                           border: InputBorder.none,
                         ),
                         style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+
+                    SizedBox(height: 30),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: AspectRatio(
+                        aspectRatio:
+                            8 /
+                            9, // <- same total height as two 16/9 boxes stacked
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.4),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              return Center(
+                                child: Icon(
+                                  Icons.landscape,
+                                  size:
+                                      constraints.maxHeight *
+                                      0.6, // fill most of the area
+                                  color: Colors.white.withOpacity(0.9),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: 20),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          /// Image Icon
+                          Column(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  print("Add Image");
+                                },
+                                icon: Icon(
+                                  Icons.image,
+                                  color: Colors.black,
+                                  size: 30,
+                                ),
+                              ),
+                              Text("Image", style: TextStyle(fontSize: 14)),
+                            ],
+                          ),
+
+                          Column(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  print("Add Story");
+                                },
+                                icon: Icon(
+                                  Icons.auto_stories,
+                                  color: Colors.black,
+                                  size: 30,
+                                ),
+                              ),
+                              Text("Story", style: TextStyle(fontSize: 14)),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ],

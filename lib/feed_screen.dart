@@ -48,7 +48,8 @@ class _FeedPageState extends State<FeedScreen> {
       "userName": "Sakif",
       "caption":
           "Fitness is not about being better than someone else. It's about being better than you used to be",
-      "postImage": "https://imgs.search.brave.com/pDA3Q3W7qvIo_6Y4fZf88Y0PaXCzSs-O4IDYLTuDJts/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDEyNTg4/MDQwLmpwZw",
+      "postImage":
+          "https://imgs.search.brave.com/pDA3Q3W7qvIo_6Y4fZf88Y0PaXCzSs-O4IDYLTuDJts/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDEyNTg4/MDQwLmpwZw",
     },
     {
       "profileImage": "https://randomuser.me/api/portraits/women/4.jpg",
@@ -86,7 +87,8 @@ class _FeedPageState extends State<FeedScreen> {
     },
     {
       "profileImage": "https://randomuser.me/api/portraits/men/3.jpg",
-      "storyImage": "https://imgs.search.brave.com/MR0VAZeSKSYTs6ZxfrFGIr4Z_ZgMDln0Ug-ECpeVqyk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMzAv/NzQ3LzY0OC9zbWFs/bC9hLW1vdW50YWlu/LWxha2Utd2l0aC1h/LW1vdW50YWluLWlu/LXRoZS1iYWNrZ3Jv/dW5kLWFuZC1sYW5k/c2NhcGUtd2FsbHBh/cGVyLWZyZWUtcGhv/dG8uanBn",
+      "storyImage":
+          "https://imgs.search.brave.com/MR0VAZeSKSYTs6ZxfrFGIr4Z_ZgMDln0Ug-ECpeVqyk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMzAv/NzQ3LzY0OC9zbWFs/bC9hLW1vdW50YWlu/LWxha2Utd2l0aC1h/LW1vdW50YWluLWlu/LXRoZS1iYWNrZ3Jv/dW5kLWFuZC1sYW5k/c2NhcGUtd2FsbHBh/cGVyLWZyZWUtcGhv/dG8uanBn",
     },
     {
       "profileImage": "https://randomuser.me/api/portraits/women/4.jpg",
@@ -372,6 +374,7 @@ class _FeedPageState extends State<FeedScreen> {
   Widget _feedPage() {
     return Scaffold(
       backgroundColor: Colors.white,
+
       body: Container(
         width: double.infinity,
         height: double.infinity,
