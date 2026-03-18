@@ -248,19 +248,21 @@ class _FeedPageState extends State<FeedScreen> {
                 )
               : Container(height: 0, width: 0, child: Text("")),
 
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
-            ),
-            width: double.infinity,
-            child: postImage.isNotEmpty
-                ? Image.network(postImage, fit: BoxFit.cover)
-                : SizedBox(),
-          ),
+          postImage.isNotEmpty
+              ? Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                  ),
+                  width: double.infinity,
+                  child: postImage.isNotEmpty
+                      ? Image.network(postImage, fit: BoxFit.cover)
+                      : SizedBox(),
+                )
+              : SizedBox(),
 
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
@@ -444,7 +446,7 @@ class _FeedPageState extends State<FeedScreen> {
             if (index == 0) return _headerSection();
             if (index == 1) return SizedBox(height: 25);
             if (index == 2) {
-              return (stories.length>0 && stories[0] != null)
+              return (stories.length > 0 && stories[0] != null)
                   ? SizedBox(
                       height: 190,
                       child: ListView.builder(
