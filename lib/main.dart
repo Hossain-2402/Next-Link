@@ -4,6 +4,7 @@ import 'log_in_screen.dart';
 import 'post.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'splashscreen.dart';
+import 'profile.dart';
 
 const String supabaseUrl = 'https://rvcociafgfxvkgehunam.supabase.co';
 const String supabaseAnonKey =
@@ -29,3 +30,13 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+/*
+ProfilePage(userName: "Hossain", profilePic: "https://imgs.search.brave.com/MR0VAZeSKSYTs6ZxfrFGIr4Z_ZgMDln0Ug-ECpeVqyk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMzAv/NzQ3LzY0OC9zbWFs/bC9hLW1vdW50YWlu/LWxha2Utd2l0aC1h/LW1vdW50YWluLWlu/LXRoZS1iYWNrZ3Jv/dW5kLWFuZC1sYW5k/c2NhcGUtd2FsbHBh/cGVyLWZyZWUtcGhv/dG8uanBn"),
+    );
+
+
+*/
+
+
+

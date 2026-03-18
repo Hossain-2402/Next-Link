@@ -1,28 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:async';
 
-void main() {
-  runApp(const MyApp());
+class ProfilePage extends StatefulWidget {
+  final String? userName;
+  final String? profilePic;
+
+  const ProfilePage({
+    required this.userName,
+    required this.profilePic,
+    super.key,
+  });
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+final supabase = Supabase.instance.client;
+
+List<dynamic> posts = [];
+
+class _ProfilePageState extends State<ProfilePage> {
+  String? theUserName;
+  String? thePP;
+
+  Future<void> fetch_my_posts() async {
+    try {
+      final data = await Supabase.instance.client
+          .from('posts')
+          .select()
+          .order('created_at', ascending: false);
+      List<dynamic> allPosts = (data as List).map((index) {
+        return {
+          'profileImage': index['profile_image']?.toString() ?? '',
+          'userName': index['user_name']?.toString() ?? 'Anonymous',
+          'caption': index['caption']?.toString() ?? '',
+          'postImage': index['post_image']?.toString() ?? '',
+        };
+      }).toList();
+
+      List<dynamic> tempList = [];
+
+      for (int i = 0; i < allPosts.length; i++) {
+        if (allPosts[i]["userName"] == theUserName) {
+          tempList.add(allPosts[i]);
+        }
+      }
+
+      setState(() {
+	posts.clear();
+        posts.addAll(tempList);
+      });
+    } catch (e) {
+      print("Fetch Error: $e");
+    }
+  }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Profile UI',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-        useMaterial3: true,
-      ),
-      home: const ProfilePage(),
-    );
+  void initState() {
+    super.initState();
+    setState(() {
+      theUserName = widget.userName ?? "";
+      thePP = widget.profilePic ?? "";
+    });
+    fetch_my_posts();
+    // Timer.periodic(const Duration(seconds: 1), (_) {
+    //   fetch_my_posts();
+    // });
   }
-}
-
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -78,17 +122,15 @@ class ProfilePage extends StatelessWidget {
 
                   const SizedBox(height: 16),
 
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 48,
-                    backgroundImage: NetworkImage(
-                      'https://via.placeholder.com/150x150.png?text=User',
-                    ),
+                    backgroundImage: NetworkImage(widget.profilePic!),
                   ),
 
                   const SizedBox(height: 16),
 
-                  const Text(
-                    'Hossain Hossain',
+                  Text(
+                    widget.userName!,
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
                   ),
 
@@ -110,13 +152,16 @@ class ProfilePage extends StatelessWidget {
                     const Divider(height: 1),
 
                     Expanded(
-                      child: ListView(
-                        padding: const EdgeInsets.all(16),
-                        children: const [
-                          PostCard(),
-                          SizedBox(height: 16),
-                          PostCard(),
-                        ],
+                      child: ListView.builder(
+                        itemCount: posts.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            children: [
+                              PostCard(index: index),
+                              SizedBox(height: 16),
+                            ],
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -141,7 +186,7 @@ class ProfilePage extends StatelessWidget {
               children: const [
                 Icon(Icons.grid_view_rounded, size: 18),
                 SizedBox(width: 6),
-                Text('Post', style: TextStyle(fontWeight: FontWeight.w600)),
+                Text('Posts', style: TextStyle(fontWeight: FontWeight.w600)),
               ],
             ),
           ),
@@ -153,9 +198,16 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-class PostCard extends StatelessWidget {
-  const PostCard({super.key});
+class PostCard extends StatefulWidget {
+  final int index;
 
+  const PostCard({required this.index, super.key});
+
+  @override
+  _PostCardState createState() => _PostCardState();
+}
+
+class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -191,18 +243,18 @@ class PostCard extends StatelessWidget {
   Widget _buildHeader() {
     return Row(
       children: [
-        const CircleAvatar(
+        CircleAvatar(
           radius: 16,
           backgroundImage: NetworkImage(
-            'https://via.placeholder.com/80x80.png?text=N',
+            posts[widget.index]["profileImage"]!,
           ),
         ),
         const SizedBox(width: 10),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Text(
-              'Rafi',
+              posts[widget.index]["userName"]!,
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
             SizedBox(height: 2),
@@ -214,18 +266,13 @@ class PostCard extends StatelessWidget {
 
   Widget _buildCaption() {
     return RichText(
-      text: const TextSpan(
+      text: TextSpan(
         style: TextStyle(fontSize: 13.5, height: 1.4, color: Colors.black),
         children: [
           TextSpan(
             text:
-                "Discover adventure in Patagonia's peaks or serenity provence's ",
+                posts[widget.index]["caption"]!,
           ),
-          TextSpan(
-            text: '@hamlets',
-            style: TextStyle(color: Colors.teal, fontWeight: FontWeight.w500),
-          ),
-          TextSpan(text: ' - arrival'),
         ],
       ),
     );
@@ -235,7 +282,7 @@ class PostCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(14),
       child: Image.network(
-        'https://imgs.search.brave.com/MR0VAZeSKSYTs6ZxfrFGIr4Z_ZgMDln0Ug-ECpeVqyk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMzAv/NzQ3LzY0OC9zbWFs/bC9hLW1vdW50YWlu/LWxha2Utd2l0aC1h/LW1vdW50YWluLWlu/LXRoZS1iYWNrZ3Jv/dW5kLWFuZC1sYW5k/c2NhcGUtd2FsbHBh/cGVyLWZyZWUtcGhv/dG8uanBn',
+        posts[widget.index]["postImage"]!,
         height: 180,
         width: double.infinity,
         fit: BoxFit.cover,

@@ -35,60 +35,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> _signUp() async {
-    Navigator.push(
-      context,
-      PageTransition(
-        child: FeedScreen(
-          userName: "UserName",
-          profilePic:
-              "https://imgs.search.brave.com/awksT_Zoh8G9Qn5d-CbZP4gAPcl0EDxLP0J88fgAnB4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNTg3/ODA1MTU2L3ZlY3Rv/ci9wcm9maWxlLXBp/Y3R1cmUtdmVjdG9y/LWlsbHVzdHJhdGlv/bi5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9Z2t2TERDZ3NI/SC04SGVRZTdKc2po/bE9ZNnZSQkprX3NL/VzlseWFMZ21Mbz0",
-        ),
-        type: PageTransitionType.scaleFade,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeOutBack,
-      ),
-    );
+    if (_email.text.isEmpty ||
+        _password.text.isEmpty ||
+        _netImage == avaterImage ||
+        _userName.text.isEmpty) {
+      return;
+    }
 
-    // if (_email.text.isEmpty ||
-    //     _password.text.isEmpty ||
-    //     _netImage == avaterImage ||
-    //     _userName.text.isEmpty) {
-    //   return;
-    // }
-    //
-    // try {
-    //   final response = await supabase.auth.signUp(
-    //     email: _email.text.trim(),
-    //     password: _password.text.trim(),
-    //   );
-    //
-    //   if (response.user != null) {
-    //     try {
-    //       await supabase.from('users').insert({
-    //         'user_name': _userName.text.trim(),
-    //         'user_email': _email.text.trim(),
-    //         'profile_pic_url': _netImage,
-    //       });
-    //     } catch (e) {
-    //       print(e);
-    //     }
-    //     Navigator.push(
-    //       context,
-    //       PageTransition(
-    //         child: FeedScreen(
-    //           userName: _userName.text.trim(),
-    //           profilePic: _netImage,
-    //         ),
-    //         type: PageTransitionType.scaleFade,
-    //         duration: const Duration(milliseconds: 500),
-    //         curve: Curves.easeOutBack,
-    //       ),
-    //     );
-    //
-    //     _email.clear();
-    //     _password.clear();
-    //   }
-    // } catch (e) {}
+    try {
+      final response = await supabase.auth.signUp(
+        email: _email.text.trim(),
+        password: _password.text.trim(),
+      );
+
+      if (response.user != null) {
+        try {
+          await supabase.from('users').insert({
+            'user_name': _userName.text.trim(),
+            'user_email': _email.text.trim(),
+            'profile_pic_url': _netImage,
+          });
+        } catch (e) {
+          print("\n\n $e \n\n");
+        }
+        //_userName.text.trim()
+        Navigator.push(
+          context,
+          PageTransition(
+            child: FeedScreen(userName: "UserName", profilePic: _netImage),
+            type: PageTransitionType.scaleFade,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeOutBack,
+          ),
+        );
+
+        _email.clear();
+        _password.clear();
+      }
+    } catch (e) {
+      print("\n\n $e \n\n");
+    }
   }
 
   Future<String> uploadBytes(Uint8List bytes) async {
@@ -116,7 +102,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     if (_pickedImage != null) {
       final url = await uploadBytes(_pickedImage!);
-      print('Image URL: $url');
       setState(() {
         _netImage = url;
       });
@@ -154,23 +139,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: 2.5),
               Text(
                 "Register",
-                style: GoogleFonts.lobster(
-                  textStyle: TextStyle(
-                    height: 3.5,
-                    color: Colors.black,
-                    fontSize: 35,
-                  ),
+                /*                 style: GoogleFonts.lobster( */
+                style: TextStyle(
+                  height: 3.5,
+                  color: Colors.black,
+                  fontSize: 35,
                 ),
+                /*                 ), */
               ),
               Text(
                 "Sign Up to explore",
-                style: GoogleFonts.akayaKanadaka(
-                  textStyle: TextStyle(
-                    color: Colors.grey,
-                    height: 1,
-                    fontSize: 15,
-                  ),
-                ),
+                /*                 style: GoogleFonts.akayaKanadaka( */
+                style: TextStyle(color: Colors.grey, height: 1, fontSize: 15),
+                /*                 ), */
               ),
               SizedBox(height: 40),
 
@@ -232,27 +213,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.transparent, // Change the border color
-                          width: 0.0, // Change the border width
+                          color: Colors.transparent,
+                          width: 0.0,
                         ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            40.0,
-                          ), // Applies a 20px radius to all four corners
-                        ), // Optional: add border radius
+                        borderRadius: BorderRadius.all(Radius.circular(40.0)),
                       ),
-                      // Focused border style
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors
-                              .transparent, // Change the focused border color
-                          width: 0.0, // Change the focused border width
+                          color: Colors.transparent,
+                          width: 0.0,
                         ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            40.0,
-                          ), // Applies a 20px radius to all four corners
-                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(40.0)),
                       ),
                     ),
                   ),
@@ -262,7 +233,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: 27),
               ColoredBox(
                 color: Colors.grey,
-                child: Container(height: 4, width: 50, child: Text("")),
+                child: SizedBox(height: 4, width: 50, child: Text("")),
               ),
 
               SizedBox(height: 27),
@@ -288,28 +259,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         horizontal: 12.0,
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.white, // Change the border color
-                          width: 0.0, // Change the border width
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            40.0,
-                          ), // Applies a 20px radius to all four corners
-                        ), // Optional: add border radius
+                        borderSide: BorderSide(color: Colors.white, width: 0.0),
+                        borderRadius: BorderRadius.all(Radius.circular(40.0)),
                       ),
-                      // Focused border style
+
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors
-                              .transparent, // Change the focused border color
-                          width: 0.0, // Change the focused border width
+                          color: Colors.transparent,
+                          width: 0.0,
                         ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            40.0,
-                          ), // Applies a 20px radius to all four corners
-                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(40.0)),
                       ),
                     ),
                   ),
@@ -340,27 +299,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.white, // Change the border color
-                          width: 0.0, // Change the border width
+                          color: Colors.transparent,
+                          width: 0.0,
                         ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            40.0,
-                          ), // Applies a 20px radius to all four corners
-                        ), // Optional: add border radius
+                        borderRadius: BorderRadius.all(Radius.circular(40.0)),
                       ),
-                      // Focused border style
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors
-                              .transparent, // Change the focused border color
-                          width: 0.0, // Change the focused border width
+                          color: Colors.transparent,
+                          width: 0.0,
                         ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            40.0,
-                          ), // Applies a 20px radius to all four corners
-                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(40.0)),
                       ),
                     ),
                   ),
@@ -383,9 +332,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: EdgeInsetsGeometry.all(15),
                     child: Text(
                       "Sign Up",
-                      style: GoogleFonts.aDLaMDisplay(
-                        textStyle: TextStyle(color: Colors.black),
-                      ),
+                      /*   style: GoogleFonts.aDLaMDisplay( */
+                      style: TextStyle(color: Colors.black),
+                      /* ), */
                     ),
                   ),
                 ),
@@ -441,30 +390,3 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
-
-//
-// body: Container(
-//         width: double.infinity,
-//         height: double.infinity,
-//         decoration: const BoxDecoration(
-//           gradient: LinearGradient(
-//             begin: Alignment.topCenter,
-//             end: Alignment.bottomCenter,
-//             colors: [
-//               Color.fromARGB(255, 168, 210, 255),
-//               // Color.fromARGB(255, 210, 245, 235),
-//               Color.fromARGB(255, 255, 255, 255),
-//               Color.fromARGB(255, 255, 255, 255),
-//             ],
-//           ),
-//         ),
-//         child: SingleChildScrollView(
-//           child: Column(
-//             children: [
-//
-// 		]
-// 	   )
-// 	)
-//     )
-// )
-// )

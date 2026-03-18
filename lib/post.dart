@@ -1,16 +1,94 @@
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:typed_data';
+
+import 'package:supabase_flutter/supabase_flutter.dart'; // This helps us use "Uint8List" datatype
 
 class PostScreen extends StatefulWidget {
-  const PostScreen({super.key});
+  final String? userName;
+  final String? profilePic;
+
+  const PostScreen({
+    required this.userName,
+    required this.profilePic,
+    super.key,
+  });
 
   @override
   State<PostScreen> createState() => _PostScreenState();
 }
 
+final supabase = Supabase.instance.client;
+
 class _PostScreenState extends State<PostScreen> {
   final TextEditingController _postController = TextEditingController();
+  Uint8List? _pickedImage;
+  String? _imageFromGallary;
 
-  void _onPost() {}
+  void _pickImage() async {
+    var response = await FilePicker.platform.pickFiles(type: FileType.image);
+
+    if (response == null) {
+      // SHOW SNAKBAR SAYING : Invalid Image
+      return;
+    }
+
+    setState(() {
+      _pickedImage = response.files.single.bytes;
+    });
+    if (_pickedImage != null) {
+      final String fileName = "${DateTime.now().millisecondsSinceEpoch}.jpg";
+
+      await supabase.storage
+          .from('images')
+          .uploadBinary(
+            fileName,
+            _pickedImage!,
+            fileOptions: FileOptions(contentType: 'image/jpeg'),
+          );
+
+      var imageUrl = supabase.storage.from('images').getPublicUrl(fileName);
+      setState(() {
+        _imageFromGallary = imageUrl;
+      });
+    }
+  }
+
+  void _PostImage() async {
+    if (_postController.text.isEmpty && _imageFromGallary == null) {
+      return;
+    }
+    try {
+      await supabase.from('posts').insert({
+        "profile_image": widget.profilePic,
+        "user_name": widget.userName,
+        "caption": _postController.text.trim(),
+        "post_image": _imageFromGallary,
+      });
+
+      _postController.text = "";
+      _imageFromGallary = null;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void _addStory() async {
+    if (_imageFromGallary == null) {
+      return;
+    }
+    try {
+      await supabase.from("stories").insert({
+        "profile_image": widget.profilePic,
+        "user_name": widget.userName,
+        "story_image": _imageFromGallary,
+      });
+
+      _imageFromGallary = null;
+    } catch (e) {
+      print("Error while Fetching stories: ${e}");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +128,13 @@ class _PostScreenState extends State<PostScreen> {
                             CircleAvatar(
                               radius: 14,
                               backgroundColor: Colors.grey,
-                              backgroundImage: NetworkImage(
-                                "https://imgs.search.brave.com/uDEcwBKmk2pulTQswWm7XSMR4qrHMDyagzZBYVIMHLs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvNTAwcC8y/OC82Ni9ncmF5LXBy/b2ZpbGUtc2lsaG91/ZXR0ZS1hdmF0YXIt/dmVjdG9yLTIxNTQy/ODY2LmpwZw",
-                              ),
+                              backgroundImage: NetworkImage(widget.profilePic!),
                             ),
 
                             const SizedBox(width: 12),
 
-                            const Text(
-                              'Tosin',
+                            Text(
+                              widget.userName!,
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w800,
@@ -105,33 +181,19 @@ class _PostScreenState extends State<PostScreen> {
                               ],
                             ),
                             child: Center(
-                              child: Text(
-                                "Post",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
+                              child: ElevatedButton(
+                                onPressed: _PostImage,
+                                child: Text(
+                                  "Post",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-
-                          /*
-                          TextButton(
-                            onPressed: _onPost,
-                            
-                            style: TextButton.styleFrom(
-                              
-                              backgroundColor: Colors.amber,
-                              foregroundColor: Colors.black,
-                              shape: const StadiumBorder(),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
-                              ),
-                            ),
-                            child: const Text('Post'),
-                          ),*/
                         ),
                       ],
                     ),
@@ -139,7 +201,7 @@ class _PostScreenState extends State<PostScreen> {
                     SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.all(16),
-                      child: TextField(
+                      child: TextFormField(
                         controller: _postController,
                         keyboardType: TextInputType.multiline,
                         textInputAction: TextInputAction.newline,
@@ -147,7 +209,7 @@ class _PostScreenState extends State<PostScreen> {
                         maxLines: 30,
                         //expands: true,
                         decoration: const InputDecoration(
-                          hintText: "Mone ki chole?",
+                          hintText: "What's on your mind?",
                           border: InputBorder.none,
                         ),
                         style: const TextStyle(fontSize: 18),
@@ -159,9 +221,7 @@ class _PostScreenState extends State<PostScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: AspectRatio(
-                        aspectRatio:
-                            8 /
-                            9, // <- same total height as two 16/9 boxes stacked
+                        aspectRatio: 8 / 9,
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
@@ -171,12 +231,15 @@ class _PostScreenState extends State<PostScreen> {
                           child: LayoutBuilder(
                             builder: (context, constraints) {
                               return Center(
-                                child: Icon(
-                                  Icons.landscape,
-                                  size:
-                                      constraints.maxHeight *
-                                      0.6, // fill most of the area
-                                  color: Colors.white.withOpacity(0.9),
+                                child: Image(
+                                  image: (_imageFromGallary == null)
+                                      ? NetworkImage(
+                                          "https://imgs.search.brave.com/KG5WF95X3KUoOawg_riCYgzFRHtr_aoOKQYtrE82_PM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTMy/NDM1NjQ1OC92ZWN0/b3IvcGljdHVyZS1p/Y29uLXBob3RvLWZy/YW1lLXN5bWJvbC1s/YW5kc2NhcGUtc2ln/bi1waG90b2dyYXBo/LWdhbGxlcnktbG9n/by13ZWItaW50ZXJm/YWNlLWFuZC5qcGc_/cz02MTJ4NjEyJnc9/MCZrPTIwJmM9Wm1Y/TzRtU2dORFB6RFJY/LUY4T0tDZm1NcXFI/cHFNVjZqaU5pMDBZ/ZTdyRT0",
+                                        )
+                                      : NetworkImage(_imageFromGallary!),
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
                                 ),
                               );
                             },
@@ -196,9 +259,7 @@ class _PostScreenState extends State<PostScreen> {
                           Column(
                             children: [
                               IconButton(
-                                onPressed: () {
-                                  print("Add Image");
-                                },
+                                onPressed: _pickImage,
                                 icon: Icon(
                                   Icons.image,
                                   color: Colors.black,
@@ -212,9 +273,7 @@ class _PostScreenState extends State<PostScreen> {
                           Column(
                             children: [
                               IconButton(
-                                onPressed: () {
-                                  print("Add Story");
-                                },
+                                onPressed: _addStory,
                                 icon: Icon(
                                   Icons.auto_stories,
                                   color: Colors.black,
@@ -227,6 +286,7 @@ class _PostScreenState extends State<PostScreen> {
                         ],
                       ),
                     ),
+                    SizedBox(height: 1000),
                   ],
                 ),
               ),
@@ -237,20 +297,3 @@ class _PostScreenState extends State<PostScreen> {
     );
   }
 }
-
-/*
-Padding(
-        padding: const EdgeInsets.all(16),
-        child: TextField(
-          controller: _postController,
-          keyboardType: TextInputType.multiline,
-          textInputAction: TextInputAction.newline,
-          maxLines: null,
-          expands: true,
-          decoration: const InputDecoration(
-            hintText: "Mone ki chole?",
-            border: InputBorder.none,
-          ),
-          style: const TextStyle(fontSize: 18),
-        ),
-      )*/
