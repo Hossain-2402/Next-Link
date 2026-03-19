@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
       }
 
       setState(() {
-	posts.clear();
+        posts.clear();
         posts.addAll(tempList);
       });
     } catch (e) {
@@ -230,11 +230,13 @@ class _PostCardState extends State<PostCard> {
 
           const SizedBox(height: 12),
 
-          _buildCaption(),
+          posts[widget.index]["userName"] != "" ? _buildCaption() : SizedBox(),
 
           const SizedBox(height: 12),
 
-          _buildImage(),
+          posts[widget.index]["profileImage"] != null
+              ? _buildImage()
+              : SizedBox(),
         ],
       ),
     );
@@ -245,9 +247,7 @@ class _PostCardState extends State<PostCard> {
       children: [
         CircleAvatar(
           radius: 16,
-          backgroundImage: NetworkImage(
-            posts[widget.index]["profileImage"]!,
-          ),
+          backgroundImage: NetworkImage(posts[widget.index]["profileImage"]!),
         ),
         const SizedBox(width: 10),
         Column(
@@ -265,28 +265,31 @@ class _PostCardState extends State<PostCard> {
   }
 
   Widget _buildCaption() {
-    return RichText(
-      text: TextSpan(
-        style: TextStyle(fontSize: 13.5, height: 1.4, color: Colors.black),
-        children: [
-          TextSpan(
-            text:
-                posts[widget.index]["caption"]!,
-          ),
-        ],
-      ),
-    );
+    return posts[widget.index]["userName"] != ""
+        ? RichText(
+            text: TextSpan(
+              style: TextStyle(
+                fontSize: 13.5,
+                height: 1.4,
+                color: Colors.black,
+              ),
+              children: [TextSpan(text: posts[widget.index]["caption"]!)],
+            ),
+          )
+        : SizedBox();
   }
 
   Widget _buildImage() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(14),
-      child: Image.network(
-        posts[widget.index]["postImage"]!,
-        height: 180,
-        width: double.infinity,
-        fit: BoxFit.cover,
-      ),
-    );
+    return posts[widget.index]["postImage"] != ""
+        ? ClipRRect(
+            borderRadius: BorderRadius.circular(14),
+            child: Image.network(
+              posts[widget.index]["postImage"]!,
+              height: 180,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          )
+        : SizedBox();
   }
 }
