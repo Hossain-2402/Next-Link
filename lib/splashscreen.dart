@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:nextlink/log_in_screen.dart';
 import 'dart:math' as math;
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+
+
+
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -9,6 +15,9 @@ class SplashScreen extends StatefulWidget {
   @override
   SplashScreenState createState() => SplashScreenState();
 }
+
+//final supabase = Supabase.instance.client;
+
 
 class SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
